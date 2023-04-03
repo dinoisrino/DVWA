@@ -6,8 +6,11 @@ jobs:
   Scan-Build:
     runs-on: ubuntu-latest
     steps:
-      - name: Group of log lines
+      - name: install semgrep and scan
+        env:
+          WORKSPACE: ""
         run: |
+            pwd
             python3 -m pip install semgrep
             semgrep --config=auto
 
