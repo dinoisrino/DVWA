@@ -6,8 +6,9 @@ jobs:
   Scan-Build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: semgrep-action
-      uses: returntocorp/semgrep-action@v1
-      env:
-        WORKSPACE: ""
+      - name: Group of log lines
+        run: |
+            python3 -m pip install semgrep
+            semgrep --config=auto
+
+
