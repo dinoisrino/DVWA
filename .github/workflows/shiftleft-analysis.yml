@@ -15,7 +15,7 @@ jobs:
             echo "path: " 
             pwd
             echo "ls:" 
-            ls
+            ls -al
             semgrep --config=auto .
 
 
