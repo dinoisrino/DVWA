@@ -7,8 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: install semgrep and scan
-        env:
-          WORKSPACE: ""
         run: |
             pwd
             python3 -m pip install semgrep
