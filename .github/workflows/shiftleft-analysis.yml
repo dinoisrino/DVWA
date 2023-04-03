@@ -10,11 +10,11 @@ jobs:
         run: |
             echo "exploring"
             pwd
-            ls - al /home/
-            ls - al /home/runner/
-            ls - al /home/runner/work/
-            ls - al /home/runner/work/DVWA/
-            ls - al /home/runner/work/DVWA/DVWA
+            sudo ls - al /home/
+            sudo ls - al /home/runner/
+            sudo ls - al /home/runner/work/
+            sudo ls - al /home/runner/work/DVWA/
+            sudo ls - al /home/runner/work/DVWA/DVWA
             python3 -m pip install semgrep
             echo "path: " 
             pwd
