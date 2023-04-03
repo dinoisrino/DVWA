@@ -12,6 +12,10 @@ jobs:
         run: |
             pwd
             python3 -m pip install semgrep
-            semgrep --config=auto
+            echo "path: " 
+            pwd
+            echo "ls:" 
+            ls
+            semgrep --config=auto .
 
 
