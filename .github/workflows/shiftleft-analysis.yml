@@ -1,25 +1,21 @@
-name: Semgrep Scan
+# This workflow integrates Scan with GitHub's code scanning feature
+# Scan is a free open-source security tool for modern DevOps teams from ShiftLeft
+# Visit https://slscan.io/en/latest/integrations/code-scan for help
+name: SL Scan
 
+# This section configures the trigger for the workflow. Feel free to customize depending on your convention
 on: push
 
 jobs:
   Scan-Build:
+    # Scan runs on ubuntu, mac and windows
     runs-on: ubuntu-latest
     steps:
-      - name: install semgrep and scan
+    - uses: actions/checkout@v1
+    - name: Run Semgrep
+      env:
+        WORKSPACE: ""
         run: |
-            echo "exploring"
-            pwd
-            sudo ls -al /home/
-            sudo ls -al /home/runner/
-            sudo ls -al /home/runner/work/
-            sudo ls -al /home/runner/work/DVWA/
-            sudo ls -al /home/runner/work/DVWA/DVWA
-            python3 -m pip install semgrep
-            echo "path: " 
-            pwd
-            echo "ls:" 
-            ls -al
-            semgrep --config=auto .
-
-
+          pwd
+          ls -al
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
