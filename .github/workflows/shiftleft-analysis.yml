@@ -1,13 +1,28 @@
-name: Semgrep Scan
+name: Semgrep Full Scan
 
 on: push
 
 jobs:
-  Scan-Build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: install semgrep and scan
-        run: |
-            echo "exploring"
-            python3 -m pip install semgrep
-            semgrep --config=auto .
+
+  semgrep-full:
+      runs-on: ubuntu-latest
+      container:
+        image: returntocorp/semgrep
+
+      steps:
+
+        # step 1
+        - name: clone application source code
+          uses: actions/checkout@v3
+
+        # step 2
+        - name: full scan
+          run: |
+            semgrep --config=auto . --json > report.json
+
+        # step 3
+        - name: save report as pipeline artifact
+          uses: actions/upload-artifact@v3
+          with:
+            name: report.json
+            path: report.json
