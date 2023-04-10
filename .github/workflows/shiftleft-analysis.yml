@@ -18,6 +18,7 @@ jobs:
         # step 2
         - name: full scan
           run: |
+            echo ::set-env name=TF_VAR_instance_label::${GITHUB_REPOSITORY#*/}-${GITHUB_SHA:0:7}
             apk add curl
             semgrep --config=auto . --json > report.json
             curl -X POST "http://10.120.0.167:8080/api/v2/import-scan/" -H  "accept: application/json" -H  "Content-Type: multipart/form-data"  -H "Authorization: Token 474cea4a2382f0e2b9667186563e9927715c4d3d" -F "minimum_severity=Info" -F "active=true" -F "scan_type=Semgrep JSON Report" -F "close_old_findings=false" -F "push_to_jira=false" -F "file=@./report.json" -F "product_name=test-api" -F "scan_date=2022-06-14" -F "engagement_name=CICD"
@@ -28,3 +29,9 @@ jobs:
           with:
             name: report.json
             path: report.json
+            
+        # step 4
+        - name: Cleanup
+          if: ${{ always() }}
+          run: docker ps -q | xargs -n 1 -P 8 -I {} docker stop {}
+            
