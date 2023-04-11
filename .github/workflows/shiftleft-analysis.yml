@@ -20,6 +20,7 @@ jobs:
           run: |
             echo ${{ github.event.repository.name }}
             apk add curl
+            apk add jq
             semgrep --config=auto . --json > report.json
             #!/bin/bash
             #Create product in DefectDojo
