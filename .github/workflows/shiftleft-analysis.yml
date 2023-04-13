@@ -35,7 +35,7 @@ jobs:
                curl -X 'GET' 'http://secops.rengine.global:8080/api/v2/tests/?prefetch=' -H 'accept: application/json' -H 'Authorization: Token 474cea4a2382f0e2b9667186563e9927715c4d3d' > /tmp/dj_tests.json
                eng_id = $(cat /tmp/dj_engagements.json| jq '.results[] | select(.name=="'"$echo"CICD-"${{ github.event.repository.name }}"'") | .id')
                #fetch tests and see if test exists or not 
-               if [ "$(curl -X 'GET' 'http://secops.rengine.global:8080/api/v2/tests/?prefetch=' -H 'accept: application/json' -H 'Authorization: Token 474cea4a2382f0e2b9667186563e9927715c4d3d' | jq '.results[] | select(.engagement==28) | .id')" ]
+               if [ "$(curl -X 'GET' 'http://10.120.0.167:8080/api/v2/tests/?prefetch=' -H 'accept: application/json' -H 'Authorization: Token 474cea4a2382f0e2b9667186563e9927715c4d3d' | jq '.results[] | select(.engagement==28) | .id')" ]
                then 
                   echo "re-importing to existing test"
                   curl -X POST "http://10.120.0.167:8080/api/v2/reimport-scan/" -H  "accept: application/json" -H  "Content-Type: multipart/form-data"  -H "Authorization: Token 474cea4a2382f0e2b9667186563e9927715c4d3d" -F "minimum_severity=Info" -F "active=true" -F "scan_type=Semgrep JSON Report" -F "close_old_findings=false" -F "push_to_jira=false" -F "file=@./report.json" -F "product_name=${{ github.event.repository.name }}" -F "scan_date=2022-06-14" -F "engagement_name=CICD-${{ github.event.repository.name }}"
